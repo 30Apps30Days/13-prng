@@ -73,3 +73,7 @@ footer a {
   text-align: center;
   vertical-align: center;
 }
+
+#num {
+  font-size: 35vmin;
+}

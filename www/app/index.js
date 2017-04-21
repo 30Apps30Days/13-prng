@@ -31,19 +31,24 @@ var app = {
   DATA_KEY: 'org.metaist.prng.data',
   store: null,
   options: {
-    debug: true
+    debug: true,
+    min: 1,
+    max: 10
   },
 
   // internal
-  // TODO
+  num: null,
 
   // DOM
-  // TODO
+  $num: null,
+  $txt_min: null,
+  $txt_max: null,
 
   init: function () {
     bindEvents(this, {
       'document': {'deviceready': this.ready},
-      'form input': {'change': this.change}
+      'form input': {'change': this.change},
+      'main': {'click': this.next}
     });
 
     if(!IS_CORDOVA) {
@@ -56,31 +61,46 @@ var app = {
 
   ready: function () {
     // Store DOM nodes
-    // TODO
+    this.$num = document.querySelector('#num');
+    this.$num_min = document.querySelector('#num_min');
+    this.$num_max = document.querySelector('#num_max');
 
     // Grab preferences
     if(IS_CORDOVA) {
       this.store = plugins.appPreferences;
       this.store.fetch(this.DATA_KEY).then(function (data) {
         Object.assign(this.options, data || {});
-        // TODO: update settings UI
+        this.$num_min.parentElement.MaterialTextfield.change(this.options.min);
+        this.$num_max.parentElement.MaterialTextfield.change(this.options.max);
         this.render();
       }.bind(this));
     }
 
-    return this;
+    return this.next();
   },
 
   change: function () {
-    // TODO: check values and update options
+    this.options.debug && console.log('.change()');
+    this.options.min = this.$num_min.value;
+    this.options.max = this.$num_max.value;
 
     if (IS_CORDOVA) {
       this.store.store(noop, noop, this.DATA_KEY, this.options);
     }//end if: options stored
-    return this;
+    return this.next();
+  },
+
+  next: function () {
+    this.options.debug && console.log('.next()');
+    var min = Math.ceil(this.options.min);
+    var max = Math.floor(this.options.max);
+    this.num = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.render();
   },
 
   render: function () {
+    this.options.debug && console.log('.render()');
+    this.$num.innerText = this.num;
     return this;
   }
 };

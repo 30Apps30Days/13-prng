@@ -26,6 +26,27 @@
         <span class="mdl-layout-title">PRNG</span>
 
         <form id="options" action="#">
+          <p>Pick a number between two given numbers.</p>
+
+          <div class="mdl-textfield mdl-js-textfield
+            mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="number" min="0"
+              pattern="-?[0-9]*(\.[0-9]+)?" id="num_min" value="1" />
+            <label class="mdl-textfield__label" for="num_min">
+              Min
+            </label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
+
+          <div class="mdl-textfield mdl-js-textfield
+            mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="number" min="1"
+              pattern="-?[0-9]*(\.[0-9]+)?" id="num_max" value="10" />
+            <label class="mdl-textfield__label" for="num_max">
+              Max
+            </label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
         </form>
 
         <footer>
@@ -36,12 +57,13 @@
             </a>
           </nav>
 
-          Idea by PLACEHOLDER<br />
+          Idea by Harold Zazula<br />
           App by <a href="http://metaist.com">Metaist LLC</a>
         </footer>
 
       </div>
       <main class="mdl-layout__content page-content">
+        <div id="num" class="center-center"></div>
       </main>
     </div>
 
